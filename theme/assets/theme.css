@@ -1,0 +1,19 @@
+.c4-board {
+  display: grid;
+  grid-template-columns: repeat(7, 42px);
+  gap: 8px;
+  background: #0b43ff;
+  padding: 12px;
+  border-radius: 6px;
+  width: max-content;
+}
+
+.c4-disc {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.c4-red { background: #e53935; }
+.c4-yellow { background: #fdd835; }
