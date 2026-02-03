@@ -105,4 +105,5 @@ class Form1(Form1Template):
     self.board[r][col] = [1.0, 0.0] if self.player == 0 else [0.0, 1.0]
     self.player = 1 - self.player
     self.render_board()
+
     
