@@ -306,7 +306,6 @@ class Form1(Form1Template):
 #"""
 
 
-
 from ._anvil_designer import Form1Template
 from anvil import *
 import anvil.server
@@ -419,6 +418,15 @@ class Form1(Form1Template):
     shell.classList.remove("player-red", "player-yellow")
     shell.classList.add("player-red" if self.player == 0 else "player-yellow")
 
+  def _sync_game_over_class(self):
+    shell = self.dom_nodes.get("board_shell")
+    if shell is None:
+      return
+    if self.game_over:
+      shell.classList.add("game-over")
+    else:
+      shell.classList.remove("game-over")
+
   def _update_status_ui(self, winner=None, is_draw=False):
     # Updates the label text and enables/disables the restart button.
     if self.game_over:
@@ -440,6 +448,7 @@ class Form1(Form1Template):
   # ----------------------------
   def render_board(self):
     self._sync_turn_classes()
+    self._sync_game_over_class()
 
     def disc_class(cell):
       a, b = cell

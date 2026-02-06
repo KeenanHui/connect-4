@@ -234,6 +234,22 @@ Column buttons (transparent) + ghost disc preview
   transform: translate(-50%, 0px);
 }
 
+
+/* When game is over: disable overlay interactions so hover ghost can't trigger */
+.game-over .c4-overlay,
+.game-over .anvil-role-c4_overlay,
+.game-over .anvil-role-c4-overlay {
+  pointer-events: none !important;
+}
+
+/* Optional: force-hide any ghost if it was mid-transition */
+.game-over .anvil-role-c4_col_btn::before,
+.game-over .anvil-role-c4-col-btn::before {
+  opacity: 0 !important;
+  transform: translate(-50%, -600px) !important;
+}
+
+
 /* =========================================================
 Turn-based ghost coloring
 (Parent element must have .player-red or .player-yellow)
