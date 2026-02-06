@@ -439,3 +439,17 @@ Drawer (CSS-only)
   font-weight: 600;
   background: #fff;
 }
+
+
+
+.ai-turn .c4-overlay,
+.ai-turn .anvil-role-c4_overlay,
+.ai-turn .anvil-role-c4-overlay {
+  pointer-events: none !important;
+}
+
+.ai-turn .anvil-role-c4_col_btn::before,
+.ai-turn .anvil-role-c4-col-btn::before {
+  opacity: 0 !important;
+  transform: translate(-50%, -600px) !important;
+}
