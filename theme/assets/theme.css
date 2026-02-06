@@ -235,6 +235,22 @@ Column buttons (transparent) + ghost disc preview
 }
 
 
+/* While waiting for backend: disable overlay interactions so hover ghost can't trigger */
+.loading .c4-overlay,
+.loading .anvil-role-c4_overlay,
+.loading .anvil-role-c4-overlay {
+  pointer-events: none !important;
+}
+
+/* Optional: force-hide any ghost if it was mid-transition */
+.loading .anvil-role-c4_col_btn::before,
+.loading .anvil-role-c4-col-btn::before {
+  opacity: 0 !important;
+  transform: translate(-50%, -600px) !important;
+}
+
+
+
 /* When game is over: disable overlay interactions so hover ghost can't trigger */
 .game-over .c4-overlay,
 .game-over .anvil-role-c4_overlay,

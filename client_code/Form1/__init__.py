@@ -338,6 +338,8 @@ class Form1(Form1Template):
     self.status_lbl = Label(text="", role="c4_status")
     self.restart_btn = Button(text="Play again", role="c4_restart_btn", enabled=False)
     self.restart_btn.set_event_handler("click", self.restart_game)
+    self.loading = False
+
 
     # ✅ Prefer a Designer panel named `underboard_panel` (slot under the board),
     # otherwise fall back to content_panel, otherwise fall back to the form.
@@ -418,6 +420,15 @@ class Form1(Form1Template):
     shell.classList.remove("player-red", "player-yellow")
     shell.classList.add("player-red" if self.player == 0 else "player-yellow")
 
+  def _sync_loading_class(self):
+    shell = self.dom_nodes.get("board_shell")
+    if shell is None:
+      return
+    if self.loading:
+      shell.classList.add("loading")
+    else:
+      shell.classList.remove("loading")
+
   def _sync_game_over_class(self):
     shell = self.dom_nodes.get("board_shell")
     if shell is None:
@@ -448,6 +459,7 @@ class Form1(Form1Template):
   # ----------------------------
   def render_board(self):
     self._sync_turn_classes()
+    self._sync_loading_class()
     self._sync_game_over_class()
 
     def disc_class(cell):
@@ -472,31 +484,63 @@ class Form1(Form1Template):
   # Gameplay
   # ----------------------------
   def drop_piece(self, col: int):
-    # Ignore clicks after game ends
-    if self.game_over:
+  # Ignore clicks after game ends or while waiting for backend
+    if self.game_over or getattr(self, "loading", False):
       return
-
+    # place the piece locally
+    prev_board = [[cell[:] for cell in row] for row in self.board]  # deep copy (6x7x2)
+  
+    r = self._landing_row_for_col(col)
+    if r is None:
+      return  # column full, ignore
+  
+    # place current player's disc locally
+    if self.player == 0:
+      self.board[r][col] = [1.0, 0.0]  # red
+    else:
+      self.board[r][col] = [0.0, 1.0]  # yellow
+  
+    # show it immediately
+    self.render_board()
+  
+    # start loading (disables ghost/hover + clicks via CSS)
+    self.loading = True
+    self._sync_loading_class()
+  
+    # ask backend to validate + return authoritative state
     try:
       resp = anvil.server.call("forward_move_to_lightsail", self.game_id, col, self.player)
     except Exception as e:
+      # revert local optimistic move on error
+      self.board = prev_board
+      self.render_board()
       Notification(f"Backend error: {e}").show()
       return
-
+    finally:
+      self.loading = False
+      self._sync_loading_class()
+  
     if not resp.get("ok"):
+      # revert local optimistic move if rejected
+      self.board = prev_board
+      self.render_board()
       Notification(resp.get("error", "Move rejected")).show()
       return
-
+  
     # Backend returns authoritative board + next player + end state
     self.board = resp["board"]
     self.player = resp.get("next_player", self.player)
     self.game_over = resp.get("game_over", False)
-
+  
+    # Re-render authoritative board (in case backend differs)
     self.render_board()
-
+  
     if self.game_over:
       self._update_status_ui(winner=resp.get("winner"), is_draw=resp.get("is_draw", False))
     else:
       self._update_status_ui()
+
+
 
   def restart_game(self, **e):
     # Start a fresh game by using a new game_id (backend in-memory store keyed by game_id)
