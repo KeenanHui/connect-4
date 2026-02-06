@@ -5,35 +5,6 @@ components:
   type: FlowPanel
 container:
   properties:
-    html: |
-      <!-- AboutForm HTML (copy/paste) -->
-      <div class="page">
-        <header class="site-header">
-          <div class="wrap header-inner">
-            <div class="brand">ConnectFour</div>
-
-            <!-- Slot where Anvil FlowPanel named nav_panel will render -->
-            <div class="nav">
-              <div anvil-slot="nav_panel"></div>
-            </div>
-          </div>
-        </header>
-
-        <main class="wrap main">
-          <section class="card">
-            <h1 class="page-title">About</h1>
-            <p class="subtitle">
-              This is the About page. Add your description, rules, and login UI here.
-            </p>
-
-            <!-- Put About content components here if you want -->
-            <div anvil-slot="about_content"></div>
-          </section>
-        </main>
-
-        <footer class="site-footer">
-          <div class="wrap">© ConnectFour</div>
-        </footer>
-      </div>
+    html: "<!-- AboutForm HTML (copy/paste) -->\n<div class=\"page\">\n  <header class=\"site-header\">\n    <div class=\"wrap header-inner\">\n      <div class=\"brand\">ConnectFour</div>\n\n      <!-- Slot where Anvil FlowPanel named nav_panel will render -->\n      <div class=\"nav\">\n        <div anvil-slot=\"nav_panel\"></div>\n      </div>\n    </div>\n  </header>\n\n  <main class=\"wrap main\">\n    <section class=\"card\">\n      <h1 class=\"page-title\">About</h1>\n      <p class=\"subtitle\">\n        This is the About page. Add your description, rules, and login UI here.\n    </br><br>\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod \n        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, \n        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo \n        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse \n        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat \n        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </p>\n\n      <!-- Put About content components here if you want -->\n      <div anvil-slot=\"about_content\"></div>\n    </section>\n  </main>\n\n  <footer class=\"site-footer\">\n    <div class=\"wrap\">© ConnectFour</div>\n  </footer>\n</div>\n"
   type: HtmlTemplate
 is_package: true
