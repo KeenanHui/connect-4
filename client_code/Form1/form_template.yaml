@@ -1,4 +1,8 @@
 components:
+- layout_properties: {slot: nav_panel}
+  name: nav_panel
+  properties: {}
+  type: FlowPanel
 - layout_properties: {slot: topbar_panel}
   name: topbar_panel
   properties: {}

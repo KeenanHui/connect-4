@@ -1,0 +1,39 @@
+components:
+- layout_properties: {slot: nav_panel}
+  name: nav_panel
+  properties: {}
+  type: FlowPanel
+container:
+  properties:
+    html: |
+      <!-- AboutForm HTML (copy/paste) -->
+      <div class="page">
+        <header class="site-header">
+          <div class="wrap header-inner">
+            <div class="brand">ConnectFour</div>
+
+            <!-- Slot where Anvil FlowPanel named nav_panel will render -->
+            <div class="nav">
+              <div anvil-slot="nav_panel"></div>
+            </div>
+          </div>
+        </header>
+
+        <main class="wrap main">
+          <section class="card">
+            <h1 class="page-title">About</h1>
+            <p class="subtitle">
+              This is the About page. Add your description, rules, and login UI here.
+            </p>
+
+            <!-- Put About content components here if you want -->
+            <div anvil-slot="about_content"></div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <div class="wrap">© ConnectFour</div>
+        </footer>
+      </div>
+  type: HtmlTemplate
+is_package: true

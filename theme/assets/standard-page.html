@@ -1,14 +1,13 @@
 <div class="page">
-  <!-- CSS-only drawer toggle -->
-  <input id="about_toggle" class="drawer-toggle" type="checkbox" />
-
   <header class="site-header">
     <div class="wrap header-inner">
       <div class="brand">ConnectFour</div>
 
+      <!-- Anvil will inject buttons here -->
       <div class="nav">
-        <label for="about_toggle" class="nav-link">About</label>
+        <div anvil-slot="nav_panel"></div>
       </div>
+
     </div>
   </header>
 
@@ -20,7 +19,7 @@
       <div class="c4-topbar">
         <div anvil-slot="topbar_panel"></div>
       </div>
-      
+
       <div class="board-wrap">
         <div class="board-shell" anvil-name="board_shell">
           <div class="c4-overlay">
@@ -30,32 +29,13 @@
         </div>
       </div>
 
-      <!-- ✅ NEW: controls live directly under the board -->
       <div class="c4-underboard">
         <div anvil-slot="underboard_panel"></div>
       </div>
-
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">© ConnectFour</div>
   </footer>
-
-  <!-- Drawer backdrop (click to close) -->
-  <label for="about_toggle" class="drawer-backdrop"></label>
-
-  <!-- Drawer panel -->
-  <aside class="drawer" role="dialog" aria-label="About">
-    <div class="drawer-header">
-      <h2>About</h2>
-      <label for="about_toggle" class="drawer-close" aria-label="Close">✕</label>
-    </div>
-
-    <div class="drawer-content">
-      <p>This is a Connect 4 project built in Anvil.</p>
-      <p>Board state uses a 6×7×2 tensor: red=[1,0], yellow=[0,1], empty=[0,0].</p>
-    </div>
-  </aside>
-
 </div>
